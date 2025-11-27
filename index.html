@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Factura Recibo - Edson Adolfo</title>
+<style>
+    /* Configuração Geral para simular papel */
+    body {
+        font-family: 'Arial', Helvetica, sans-serif;
+        background-color: #555; /* Fundo escuro para destacar o papel */
+        display: flex;
+        justify-content: center;
+        padding: 30px;
+        margin: 0;
+    }
+    .invoice-paper {
+        background-color: #fff;
+        width: 800px; /* Largura fixa para simular A4/Carta */
+        padding: 40px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    /* Cabeçalho */
+    .header {
+        display: flex;
+        margin-bottom: 30px;
+        align-items: flex-start;
+    }
+    /* Simulação Visual do Logo */
+    .logo-container {
+        display: flex;
+        align-items: center;
+        margin-right: 25px;
+    }
+    /* Ícone da chama desenhado com CSS puro */
+    .logo-icon-css {
+        width: 50px;
+        height: 85px;
+        position: relative;
+        margin-right: 10px;
+    }
+    .flame-dark {
+        position: absolute;
+        bottom: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: #232d4b; /* Cor escura do logo */
+        border-radius: 50% 0 50% 50% / 30% 0 70% 70%;
+        z-index: 1;
+    }
+    .flame-red {
+        position: absolute;
+        bottom: 5px; right: -5px;
+        width: 70%; height: 80%;
+        background-color: #c1272d; /* Cor vermelha do logo */
+        border-radius: 50% 50% 0 50%;
+        z-index: 2;
+    }
+    /* Texto do logo */
+    .logo-text-box { color: #232d4b; }
+    .logo-main-title { font-size: 46px; font-weight: 900; line-height: 0.8; letter-spacing: -1px; }
+    .logo-sub-title { font-size: 11px; font-weight: bold; margin-top: 2px; letter-spacing: 0.5px; }
+    
+    /* Informações da Empresa */
+    .company-info { font-size: 13px; line-height: 1.5; color: #000; }
+    .company-name { font-weight: bold; font-size: 15px; margin-bottom: 5px;}
+    .company-nif { font-weight: bold; }
+
+    /* --- ÁREA DOS DADOS DO ESTUDANTE (Alterada com seus dados) --- */
+    .student-data-row {
+        border-top: 2px solid #000;
+        border-bottom: 2px solid #000;
+        padding: 10px 0;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .data-field {
+        display: flex;
+        flex-direction: column;
+    }
+    .field-label {
+        font-size: 11px;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 5px;
+    }
+    .field-value {
+        font-size: 12px;
+        color: #000;
+        text-transform: uppercase;
+        line-height: 1.3;
+        font-family: 'Arial', sans-serif;
+    }
+    /* Larguras específicas para as colunas de dados */
+    .col-ficha { width: 6%; }
+    .col-nif { width: 15%; }
+    .col-nome { width: 25%; }
+    .col-prov { width: 10%; }
+    .col-anolect { width: 12%; }
+    .col-anoacad { width: 12%; }
+    .col-turma { width: 6%; }
+    .col-curso { width: 14%; }
+
+    /* Título da Fatura */
+    .invoice-title-box {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #000;
+        border-bottom: 1px solid #000;
+        padding-bottom: 2px;
+        display: inline-block;
+        width: 100%;
+    }
+
+    /* Estilos de Tabela */
+    table { width: 100%; border-collapse: collapse; font-size: 11px; color: #000; }
+    th {
+        background-color: #d9e1ec; /* Cor de fundo azulada do cabeçalho */
+        border: 1px solid #000;
+        padding: 5px 8px;
+        text-align: left;
+        font-weight: bold;
+    }
+    td { border: 1px solid #000; padding: 5px 8px; }
+    .txt-center { text-align: center; }
+    .txt-right { text-align: right; }
+    .noborder-lat { border-left: none; border-right: none; } /* Para a tabela de impostos */
+
+    /* Seção de Totais */
+    .footer-summary { display: flex; justify-content: space-between; margin-top: 15px; }
+    .tax-section { width: 58%; }
+    .totals-section { width: 38%; }
+    .total-row-item { display: flex; justify-content: space-between; padding: 3px 0; font-size: 12px; }
+    .final-pay-row {
+        font-weight: bold;
+        border-top: 1px solid #000;
+        border-bottom: 2px solid #000;
+        margin-top: 5px;
+        padding: 5px 0;
+    }
+
+    /* Rodapé do Documento */
+    .document-footer {
+        margin-top: 40px; font-size: 10px; color: #000;
+        border-top: 1px solid #aaa; padding-top: 5px;
+    }
+    .footer-top-line { display: flex; justify-content: space-between; margin-bottom: 5px; }
+</style>
+</head>
+<body>
+
+<div class="invoice-paper">
+    <div class="header">
+        <div class="logo-container">
+            <img src="./logo.png" alt="">
+        </div>
+        <div class="company-info">
+            <div class="company-name">GRUPO VINECH FORMAÇÃO (ISPCAÁLA)</div>
+            <div class="company-nif">NIF N.º: 5125003166</div>
+            <div style="margin-top: 8px;">Tel: +244 923 424 978 E-mail: matriculas@ispcaala.com</div>
+        </div>
+    </div>
+
+    <div class="student-data-row">
+        <div class="data-field col-ficha">
+            <span class="field-label">Ficha</span>
+            <span class="field-value">1794</span> 
+        </div>
+        <div class="data-field col-nif">
+            <span class="field-label">NIF</span>
+            <span class="field-value">008125020HO04</span>
+        </div>
+        <div class="data-field col-nome">
+            <span class="field-label">Nome</span>
+            <span class="field-value">EDSON ADOLFO<br>DOS SANTOS CHIMUCO</span>
+        </div>
+        <div class="data-field col-prov">
+            <span class="field-label">Província</span>
+            <span class="field-value">Huambo</span>
+        </div>
+        <div class="data-field col-anolect">
+            <span class="field-label">Ano Lectivo</span>
+            <span class="field-value">2025 / 2026</span>
+        </div>
+        <div class="data-field col-anoacad">
+            <span class="field-label">Ano Acadêmico</span>
+            <span class="field-value">II Ano</span>
+        </div>
+        <div class="data-field col-turma">
+            <span class="field-label">Turma</span>
+            <span class="field-value">202</span>
+        </div>
+        <div class="data-field col-curso">
+            <span class="field-label">Curso</span>
+            <span class="field-value">CIÊNCIAS DA<br>COMPUTAÇÃP</span>
+        </div>
+    </div>
+
+    <div class="invoice-title-box">Factura Recibo nº 261551/2025</div>
+
+    <table style="margin-bottom: 20px;">
+        <thead>
+            <tr>
+                <th style="width: 40%;">Descrição</th>
+                <th class="txt-center" style="width: 8%;">Qtd.</th>
+                <th class="txt-center" style="width: 8%;">Un.</th>
+                <th class="txt-right" style="width: 15%;">Pr. Unitário</th>
+                <th class="txt-right" style="width: 10%;">Desc.</th>
+                <th class="txt-center" style="width: 8%;">Taxa(%)</th>
+                <th class="txt-right" style="width: 15%;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>MENSALIDADE OUTUBRO</td>
+                <td class="txt-center">1</td>
+                <td class="txt-center">UN</td>
+                <td class="txt-right">36.000,00</td>
+                <td class="txt-right">0,00</td>
+                <td class="txt-center">0</td>
+                <td class="txt-right">36.000,00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer-summary">
+        <div class="tax-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="noborder-lat">Taxa/Imposto</th>
+                        <th class="noborder-lat">Base Incidência</th>
+                        <th class="noborder-lat">Total/Imposto</th>
+                        <th class="noborder-lat">Motivo Isenção</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="noborder-lat">0</td>
+                        <td class="noborder-lat">36.000,00</td>
+                        <td class="noborder-lat">0,00</td>
+                        <td class="noborder-lat"></td>
+                    </tr>
+                    <tr><td class="noborder-lat">-</td><td class="noborder-lat"></td><td class="noborder-lat">-</td><td class="noborder-lat"></td></tr>
+                    <tr><td class="noborder-lat">-</td><td class="noborder-lat"></td><td class="noborder-lat">-</td><td class="noborder-lat"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="totals-section">
+            <div class="total-row-item">
+                <span>Total Ilíquido</span><span>36.000,00</span>
+            </div>
+            <div class="total-row-item">
+                <span>Descontos Comerciais</span><span>0,00</span>
+            </div>
+            <div class="total-row-item">
+                <span>Total Imposto</span><span>0,00</span>
+            </div>
+            <div class="total-row-item final-pay-row">
+                <span>TOTAL A PAGAR</span><span>36.000,00</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="document-footer">
+        <div class="footer-top-line">
+            <div>610c-Processado por programa SIGISPC©</div>
+            <div>Utilizador: Adelino Pena Pedro</div>
+        </div>
+        <div>Os Bens/Serviços foram colocados à disposição do adquirente na data 2025-11-05 e no local do documento</div>
+    </div>
+
+</div>
+
+</body>
+</html>
